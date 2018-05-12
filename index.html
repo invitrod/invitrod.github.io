@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nebulas Notes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.2/css/bootstrap-colorpicker.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <header class="container-fluid d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center" style="font-size: 22px;">
+            <img class="logo" src="img/logo.jpg" alt="logo" style="height: 50px;"> Nebulas Notes
+        </div>
+        <button id="add-note" class="btn btn-outline-secondary" data-toggle="modal" data-target="#note-modal">
+            <i class="far fa-sticky-note"></i>Add</button>
+    </header>
+    <div class="container-fluid d-flex flex-wrap m-0 p-0 page-body">
+        <div class="note" data-note-id="1">
+            <div class="note-header d-flex justify-content-between">
+                <div clas="note-date">22.04.2018 at 13:54</div>
+                <div class="note-controls">
+                    <button class="note-control edit" title="Edit note" data-toggle="modal" data-target="#note-modal">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="note-control edit" title="Remove note" data-toggle="modal" data-target="#remove-modal">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="note-body">
+                Create your first note!
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="note-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="note-form">
+                        <div class="form-group">
+                            <label for="note-text">Your note</label>
+                            <textarea class="form-control" id="note-text"></textarea>
+                        </div>
+                        <label for="note-color">Note color</label>
+
+                        <div id="cp" class="input-group mb-3 colorpicker-component" for="note-color">
+                            <input type="text" class="form-control" id="note-color" value="#58c9c2">
+                            <div class="input-group-append">
+                                <span class="input-group-text input-group-addon">
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" form="note-form" id="submitBtn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="remove-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove note</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete a note?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="deleteBtn" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.2/js/bootstrap-colorpicker.min.js"></script>
+    <script src="js/nebPay.js"></script>
+    <script src="js/contractApi.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            let isExtensionExist = typeof (webExtensionWallet) !== "undefined";
+            if (!isExtensionExist) {
+                $(".page-body").empty();
+                $(".page-body").append('<div class="no-extension">Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Nebulas Notes</div>');
+            }
+            else {
+                $('#cp').colorpicker();
+                $('#note-modal').on('show.bs.modal', function (event) {
+                    let note = $(event.relatedTarget).closest(".note");
+                    let noteId = note.data('note-id');
+                    var modal = $(this);
+                    if (!noteId) {
+                        modal.find('.modal-title').text('Add new note');
+                        modal.find('.modal-body #note-text').val("");
+                        modal.find('#submitBtn').data('note-id', "");
+                    }
+                    else {
+                        modal.find('.modal-title').text('Edit note');
+                        modal.find('.modal-body #note-text').val(note.find(".note-body").text());
+                        let color = note.css("background-color");
+                        console.log(color);
+                        modal.find('#note-color').val(color);
+                        modal.find('#submitBtn').data('note-id', noteId);
+                        $('#cp').colorpicker();
+                    }
+
+                });
+
+                $('#remove-modal').on('show.bs.modal', function (event) {
+                    let note = $(event.relatedTarget).closest(".note");
+                    let noteId = note.data('note-id');
+                    $(this).find('#deleteBtn').data('note-id', noteId);
+                    console.log($(this).find('#deleteBtn').data('note-id'));
+                });
+
+                let api = new NoteContractApi();
+                api.get(50, 0, resp => {
+                    if (resp.result) {
+                        let notes = JSON.parse(resp.result);
+                        if (notes.length > 0) {
+                            $(".page-body").empty();
+
+                            notes.sort((a, b) => a.date > b.date ? -1 : 1);
+                            for (const note of notes) {
+                                showNote(note);
+                            }
+                        }
+                    }
+                });
+
+
+                $("#submitBtn").click(() => {
+                    let text = $("#note-text").val();
+                    let color = $("#note-color").val();
+                    let noteId = $("#submitBtn").data("note-id");
+
+                    if (!noteId) {
+                        api.add(text, color);
+                    }
+                    else {
+                        api.update(noteId, text, color);
+                    }
+                    $('#note-modal').modal('hide');
+                });
+
+                $("#deleteBtn").click(() => {
+                    let noteId = $("#deleteBtn").data("note-id");
+                    api.delete(noteId);
+                    $('#remove-modal').modal('hide');
+                });
+            }});
+
+    </script>
+</body>
+
+</html>
