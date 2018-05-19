@@ -1,12 +1,12 @@
-# Nebulas Notes 
+# Event manager
 
-The service allows you to create color notes.
+The application allows you to record and plan events in advance.
 
 ### Smart Contract
 
-- `total()` - Returns total count of notes.
-- `add(date, text, color)` - Adds a new note.
-- `update(id, text, color)` - Updates an existing note.
-- `delete(id)` - Deletes the note.
-- `get(limit, offset)` - Returns the specified number of notes.
-- `getByWallet(wallet)` - Returns all notes of the user with the specified wallet.
+- `total()` - Returns total count of events.
+- `add(date, text, color)` - Adds a new event.
+- `update(id, date, text, color)` - Updates an existing event.
+- `delete(id)` - Deletes the event.
+- `get(limit, offset)` - Returns the specified number of events.
+- `getByWallet(wallet)` - Returns all events of the user with the specified wallet.
